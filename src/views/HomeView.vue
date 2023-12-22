@@ -9,12 +9,8 @@ const lista = reactive({
 
 <template>
   <main>
-    <div class="w-full h-full bg-black flex justify-center itens-center flex-col ">
-      <h1 v-for="Iten in lista.data" class="text-[red] text-center">O {{Iten.name}}, tem valor de R$ {{Iten.value}}</h1>
-      
-
-
+    <div class="grid grid-rows-4 grid-flow-col gap-4">
+      asasa
     </div>
-    
   </main>
 </template>
