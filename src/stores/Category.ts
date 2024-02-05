@@ -1,4 +1,5 @@
-import type { Category } from "../types/ApiCategory";
+import type { promises } from "dns";
+import type { Category, CategoryAmounts as CategoryAmounts } from "../types/Category";
 
 const rout = "http://localhost:8080/api"
 
@@ -12,7 +13,7 @@ export async function getCategory(): Promise<Category[]> {
         })
 
         if (!response.ok) {
-            throw new Error(`Erro na solicitação: ${response.status}`);        
+            throw new Error(`Erro na solicitação: ${response.status}`);
         }
 
         const data = await response.json();
@@ -20,7 +21,7 @@ export async function getCategory(): Promise<Category[]> {
         return data.map((item: Category) => ({
             id: item.id,
             name: item.name,
-            description : item.description
+            description: item.description
         }));
 
     } catch (error) {
@@ -29,9 +30,9 @@ export async function getCategory(): Promise<Category[]> {
     }
 }
 
-export async function getCategoryId(id:String): Promise<Category>{
+export async function getCategoryId(id: String): Promise<Category> {
     try {
-        const response = await fetch(`${rout}/categories/${id}`,{
+        const response = await fetch(`${rout}/categories/${id}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
@@ -39,26 +40,28 @@ export async function getCategoryId(id:String): Promise<Category>{
         })
 
         if (!response.ok) {
-            throw new Error(`Erro na solicitação: ${response.status}`);        
+            throw new Error(`Erro na solicitação: ${response.status}`);
         }
-        
+
         const data = await response.json();
 
         return data.map((item: Category) => ({
             id: item.id,
             name: item.name,
-            description : item.description
+            description: item.description
         }));
 
-    }catch (error) {
+    } catch (error) {
         console.log();
-        throw error; 
+        throw error;
     }
 }
 
-export async function postCategory(category : Category){
+export async function postCategory(category: Category) {
     try {
-        const response = await fetch(`${rout}/categories`,{
+        console.log(category);
+        
+        const response = await fetch(`${rout}/categories`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -66,28 +69,54 @@ export async function postCategory(category : Category){
             body: JSON.stringify(category)
         })
 
-        if(response.status != 201){
-            throw new Error(`Erro na solicitação: ${response.status}`);        
+        if (response.status != 201) {
+            throw new Error(`Erro na solicitação: ${response.status}`);
         }
     } catch (error) {
-        throw error; 
+        throw error;
     }
 }
 
-export async function deleteCategory(id : string ){
+export async function deleteCategory(id: string) {
     try {
-        const response = await fetch(`${rout}/categories/${id}`,{
+        const response = await fetch(`${rout}/categories/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-type": "application/json",
             }
         })
 
-        if(!response.ok){
-            throw new Error(`Erro na solicitação: ${response.status}`);        
+        if (!response.ok) {
+            throw new Error(`Erro na solicitação: ${response}`);
         }
     } catch (error) {
-        throw error; 
+        throw error;
+    }
+}
+
+export async function getCategoryAmounts(): Promise<CategoryAmounts[]> {
+    try {
+        const response = await fetch(`${rout}/categories/graphics/amount`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error(`Erro na solicitação: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        console.log(data);
+        return data.map((item: CategoryAmounts) => ({
+            name: item.name,
+            amount : item.amount
+        })); 
+        
+    } catch (error) {
+        throw error;
     }
 }
 

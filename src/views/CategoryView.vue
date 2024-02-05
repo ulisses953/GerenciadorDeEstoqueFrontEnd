@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
-import createCategory from '../components/CategoryCreate.vue'
+import { ref, type Ref,onMounted } from 'vue'
 import CategoryCRUD from '../components/CategoryCRUD.vue';
+import { initFlowbite } from 'flowbite'
+import CategoryGrafic from '../components/CategoryGrafic.vue';
+import Chart from 'chart.js/auto';
 
-let formulario: Ref<Boolean> = ref(false);
+onMounted(()=>{
+    initFlowbite();
+})
 
-function mudarFormulario() {
-    formulario.value = !formulario.value;
-}
 
 </script>
 
@@ -16,6 +17,8 @@ function mudarFormulario() {
         data-modal-toggle="crudCategory">
         <button class="text-white">Categorias</button>
     </div>
+    
+    <CategoryGrafic/> 
 
     <!-- modal category -->
     <div class="bg-white hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -28,7 +31,5 @@ function mudarFormulario() {
             </button>
         </div>
 
-
-        
     </div>
 </template>

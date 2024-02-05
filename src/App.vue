@@ -5,7 +5,7 @@ import SideBar from './components/SideBar.vue'
 import { initFlowbite } from 'flowbite'
 
 onMounted(() => {
-    initFlowbite();
+  initFlowbite();
 })
 
 </script>
